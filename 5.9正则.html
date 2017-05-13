@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+    <li class="li li2 li3"></li>
+    <li></li>
+    <li class="li2"></li>
+</ul>
+
+
+<!--
+
+    \w：数字、字母、下划线
+    \W:非数字、字母、下划线
+    \b:边界符，注意：符号没有边界符如，。、！，会把非边界的字符，分割为带边界的
+    var getClass = （a）=>{}  括号里是参数，箭头函数不能绑在事件上。注意：this，箭头函数中的this有关，如果没有，this指向window。
+        事件函数不要直接使用箭头函数。
+    匿名函数要绑事件，单写会报错，解决：给匿名函数加括号（function (){}）
+    \B:非边界符
+    \S:非空格
+
+
+    重复子项：当某个正则有子项的时候，有几个子项，就写几个\x(1、2、3...)
+    \1\2称为重复子项，这些符号一定等于子项。
+    如果在正则中乱写重复项，那么replace方法的最后的返回值是整个字符串，match方法返回null
+
+-->
+<script>
+
+    var getByClass =  (sClass) =>{
+        var aEle = document.getElementsByTagName('*');
+        aEle = Array.from(aEle);
+        var arr = [];
+        //var re = new RegExp('\\b'+sClass+'\\b','g');
+        var re = new RegExp('(^|\\s)'+sClass+'(\\s|$)','g');
+        console.log(re)
+        aEle.forEach((a,i) => {
+            if(re.test(a.className)){
+                arr.push(a)
+            }
+        })
+        return arr
+    }
+    console.log(getByClass('li2'))
+
+console.log('a'.match(/a/))
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!--
+        面向对象：
+            是对现实世界理解和抽象的方法，是计算即编程技术发展到一定阶段后的产物。
+            抽象：抽离抽出像的部分
+            特征：
+                抽象
+                封装
+                继承
+            定义：把具有相同特征的东西归为一类并且返回一个对象，这个对象的特征挂在构造函数的原型上。
+                构造函数：构造对象的函数，（一个函数return出一个对象，就叫构造函数）
+                实例（实例化对象|过程，（把函数用变量存起来））
+
+            ！！非空对象才能加属性。[]{} null 不能加属性   div.id 标签也是对象
+
+            变量：let  前面是无主的
+            属性：有主
+            方法：前面有主的函数
+            函数：前面无主的函数
+
+            工厂函数|构造函数
+
+            new Date（）
+            new：运算符，运算函数，等同于调用（），
+                1、如果不传参，用了new之后，等同于函数调用，可以不写（）   new Date
+                2、默认不在返回undefined，而是返回object。（不写new，this指window，写了this指这个对象，）
+                3、如果加return，后面是对象类型，那么返回值就为新加的return后的对象，如果不是对象类型，那么会返回new出来的那个（即默认的return）
+                4、new之后，this指向obj
+
+
+            原型
+                prototype:解决实例化对象使用方法时性能的问题，是函数都有这个属性，
+                         prototype只给该构造函数的实例化对象用。
+                只要每个函数都自带有一个属性或方法，其中有个属性为 prototype， prototype***的值是个对象***。
+                 js中有个特性，实例化对象上如果没有某个属性或方法，那么一定回去构造函数的原型上找这个方法。
+
+            先找自己，找不到找prototype
+
+
+            一个构造函数：
+                属性放在构造函数内。
+                方法放在构造函数的原型下。
+
+                __proto__原型链  对象身上一定有原型链，但时一定没有原型。
+                原型链实例化对象是构造函数的桥梁
+                实例化对象的原型链 等同于 构造函数的原型
+                函数既有原型也有原型链
+
+            原型链是桥梁，原型链找构造函数，构造函数找原型（），原型是对象，找对象，即找到原型链，重复。要找原型下的方法，找到停止，不能找到原型链下的方法
+            原型链 ——> 构造函数 ——> 原型 ——>原型链.....。
+
+            原型给实例化对象用，所以实例化对象找原型。
+            函数找原型链。
+
+
+
+
+
+            -->
+
+
+    <script>
+        //一、不用new
+        //工厂函数|构造函数
+//        function Person (name,age){
+//            console.log(this)
+//            var obj = {}
+//            obj.name = name;
+//            obj.age = age;
+//            obj.say = function () {
+//                console.log(c)
+//            };
+//            return obj
+//        }
+//        //实例化
+//        var p = Person ('熊爱华',25)
+//        //p.say();
+
+
+
+/*
+        //二、new
+        function Person (name,age){
+            //var obj = {},已经是对象了，所以不用写
+            console.log(this)
+            this.name = name;
+            this.age = age;
+            this.say = function () {
+                console.log(123)
+            };
+            //return obj 默认有这个，
+        }
+        //实例化
+        var p = new Person('熊爱华',25)
+        console.log(p)
+        //p.say()
+*/
+
+
+
+        //二、new
+        function Person (name,age){ //构造函数
+            this.name = name;
+            this.age = age;
+           /* this.say = function () {
+                alert()
+            };*/
+
+        }
+        //实例化
+        var p =new Person('熊爱华',25)//return后面的对象
+        var p2 = new Person('熊爱华2',25);
+        Person.prototype.say = function () {
+            alert(this.name)
+        }
+
+        console.dir (p)
+        p.say()
+
+        console.dir()
+    </script>
+</body>
+</html>

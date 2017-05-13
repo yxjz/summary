@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box div,#box2 div{
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+            display: none;
+
+        }
+        #box .active,#box2 .active{
+            background: yellow;
+        }
+
+        #box .show,#box2 .show{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!--
+    let:变量
+        1、声明时不会在window下注册。var 会
+        2、暂存死区（必须声明以后用，没有预解析，先声明在使用。不然会报错。var不声明时undefined）
+        3、支持块级作用域{}
+            {
+                let a = 10;
+                {
+                    alert(a)
+                }
+            }
+
+    1、把变量提取
+    2、拆function
+    3、变量变属于，函数变方法
+    4、修正this指向。
+
+
+    包装对象：
+        当简单类型去调用某个属性或者方法的时候，那么系统会偷偷的在内部简单类型的系统对象构造函数的属性或者
+        方法查找（调用出来），输出之后（使用之后），这个对象自动被销毁。
+        注意：包装对象的属性只能读，不能写。方法可以读，可以写
+
+
+    alert 会调用toString 方法
+
+    call(this的指向，参数2，参数3)
+        第一个参数就是修改后this，
+        第一个参数后都是实参，可以有若干个参数。
+        function fn(a,b,c){}
+        fn.call(this,a,b,c)
+    apply:
+        只有2个参数
+        第一个：修改后this
+        第二个参数：[].
+         function fn(a,b,c){}
+        fn.call(this,[a,b,c])
+
+        类数组转成数组
+
+         var lis = document.getElementsByTagName('li');
+
+         var lis = Array.prototype.slice.call(lis)
+         借用数组的方法slice。只能用slice
+    -->
+
+<div id="box">
+    <input type="button" value="按钮一" class="btn1">
+    <input type="button" value="按钮二" class="btn2">
+    <input type="button" value="按钮三" class="btn3">
+    <div class="div1 show" >111</div>
+    <div class="div2" >222</div>
+    <div class="div3" >333</div>
+</div>
+
+<div id="box2">
+    <input type="button" value="按钮一" class="btn1">
+    <input type="button" value="按钮二" class="btn2">
+    <input type="button" value="按钮三" class="btn3">
+    <div class="div1 show" >111</div>
+    <div class="div2" >222</div>
+    <div class="div3" >333</div>
+
+    <input type="button" value="关第一个">
+    <input type="button" value="开第二个">
+    <input type="button" value="全开">
+    <input type="button" value="全关">
+
+</div>
+
+    <script>
+        function Tab(box){
+            this.box = document.getElementById(box);
+            this.btn = this.box .getElementsByTagName('input');
+            this.div = this.box.getElementsByTagName('div');
+            this.oDiv = this.div[0];
+            this.oBtn = this.btn[0];
+            this.timer = null;
+            this.num = 0;
+
+
+            this.init()
+
+        }
+        Tab.prototype.init = function () {
+            var _this = this;
+            for(let i=0;i<this.btn.length;i++){
+                this.btn[i].onclick = function () {
+                   _this.change(i)
+                }
+            }
+        }
+        Tab.prototype.change = function (i) {
+            this.oBtn.className = '';
+            this.oDiv.className = '';
+            this.div[i].className = 'show';
+            this.btn[i].className = 'active';
+            this.oBtn = this.btn[i];
+            this.oDiv = this.div[i];
+
+        }
+        var t = new Tab('box');
+        var t2 = new Tab('box2');
+        var timer = null;
+        var num = 0;
+        Tab.prototype.autoplay = function () {
+            var _this = this;
+            this.timer = setInterval(function () {
+                _this.num++;
+                _this.change(_this.num%=3)
+            },500)
+        }
+        Tab.prototype.stop = function () {
+            clearInterval(this.timer);
+            this.timer=null;
+        }
+        Tab.prototype.isplay = function () {
+            ruturn !!this.timer;
+        }
+        t.autoplay();
+
+        //console.log(Window)
+    </script>
+</body>
+</html>
